@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useContext, useState} from 'react';
 import './App.css';
+import {Button} from "antd";
+import Context from "./context";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const A: React.FC = () => {
+    useState()
+    const count = useContext(Context);
+    return (
+        <div>
+            A
+            app传过来的数据: {count}
+            <B/>
+        </div>
+    )
 }
+
+const B: React.FC = () => {
+    const count = useContext(Context);
+    return (
+        <div>
+            B
+            app传过来的数据: {count}
+        </div>
+    )
+}
+
+const App: React.FC = () => {
+    const [count, setCount] = useState(12);
+    return (
+        <Context.Provider value={count}>
+            <div>
+                App
+                <A/>
+                <Button type={"primary"}
+                        onClick={() => setCount(count + 1)}>
+                    修改
+                </Button>
+            </div>
+        </Context.Provider>
+    )
+};
 
 export default App;
